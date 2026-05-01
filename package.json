@@ -16,8 +16,8 @@
     "name": "calendar-card-watchface",
     "pebble": {
         "capabilities": [
-            "configurable",
-            "location"
+            "location",
+            "configurable"
         ],
         "displayName": "Calendar Card Watchface",
         "enableMultiJS": true,
@@ -38,7 +38,8 @@
             "ShowWeather",
             "ShowBattery",
             "ShowBluetooth",
-            "DateFormat"
+            "DateFormat",
+            "MaxHoursUntilEvent"
         ],
         "projectType": "native",
         "resources": {
@@ -50,8 +51,8 @@
             "chalk",
             "diorite",
             "emery",
-            "flint",
-            "gabbro"
+            "gabbro",
+            "flint"
         ],
         "uuid": "2e8f1047-a910-4c10-ac29-8b7d370915fe",
         "watchapp": {

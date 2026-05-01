@@ -9,6 +9,7 @@ typedef struct {
   GColor  TextColor;
   uint8_t TemperatureUnit;    // 0 = Celsius, 1 = Fahrenheit
   uint8_t CountdownPosition;  // 0 = top (above event name), 1 = bottom
+  int MaxHoursUntilEvent;     // in hours
   uint8_t ShowWeather;        // 1 = visible (default), 0 = hidden
   uint8_t ShowBattery;        // 1 = visible (default), 0 = hidden
   uint8_t ShowBluetooth;      // 1 = visible (default), 0 = hidden
@@ -31,7 +32,7 @@ static char s_event_title[33];
 static int  s_event_hour;
 static int  s_event_minute;
 static bool s_has_event;
-static bool s_show_card;  // event within 24 hours
+static bool s_show_card;
 
 static char s_time_buf[8];
 static char s_date_buf[32];
@@ -65,6 +66,7 @@ static void prv_default_settings(void) {
   s_settings.TextColor           = GColorWhite;
   s_settings.TemperatureUnit     = 0;
   s_settings.CountdownPosition   = 0;
+  s_settings.MaxHoursUntilEvent  = 24;
   s_settings.ShowWeather         = 1;
   s_settings.ShowBattery         = 1;
   s_settings.ShowBluetooth       = 1;
@@ -225,8 +227,8 @@ static void prv_update_time(void) {
 // ---- Event display ----
 
 static void prv_update_event_display(void) {
-  // Only show card if event is within the next 24 hours
-  bool show_card = s_has_event && s_event_hour < 24;
+  // Only show card if event is within the next MaxHoursUntilEvent hours
+  bool show_card = s_has_event && s_event_hour < s_settings.MaxHoursUntilEvent;
   s_show_card = show_card;
 
   layer_set_hidden(s_card_layer, !show_card);
@@ -317,6 +319,9 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       ? (uint8_t)atoi(t->value->cstring) : (uint8_t)t->value->int32;
     settings_changed = true;
   }
+  
+  t = dict_find(iterator, MESSAGE_KEY_MaxHoursUntilEvent);
+  if (t) { s_settings.MaxHoursUntilEvent = (uint8_t)t->value->int32; settings_changed = true; }
 
   t = dict_find(iterator, MESSAGE_KEY_ShowWeather);
   if (t) { s_settings.ShowWeather = (uint8_t)t->value->int32; settings_changed = true; }
@@ -474,13 +479,12 @@ static void main_window_load(Window *window) {
 #endif
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
 
-  // Date: left-aligned, starting at s_date_px
+  // Date: full width, centered text
   s_date_layer = text_layer_create(
     GRect(0, date_y_top, w, s_date_h));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_text_color(s_date_layer, s_settings.TextColor);
-  text_layer_set_font(s_date_layer, fonts_get_system_font(
-    large ? FONT_KEY_GOTHIC_28_BOLD : FONT_KEY_GOTHIC_18_BOLD));
+  text_layer_set_font(s_date_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
   text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
 
   // Weather: top-right

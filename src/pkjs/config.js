@@ -134,6 +134,15 @@ module.exports = [
           { "label": "Top (above event name)", "value": 0 },
           { "label": "Bottom (below event name)", "value": 1 }
         ]
+      },
+      {
+        "type": "slider",
+        "messageKey": "MaxHoursUntilEvent",
+        "label": "Max Hours Until Event",
+        "defaultValue": 24,
+        "min": 12,
+        "max": 744,
+        "step": 12
       }
     ]
   },
