@@ -1,6 +1,8 @@
 # Upcoming Calendar Cards
 
 A Pebble watchface combining Google Calendar events and live weather in a clean card-based layout that adapts dynamically to what's coming up next.
+Forked from sbrueckl's upcoming-calendar-cards (https://github.com/sbrueckl/upcoming-calendar-cards.git)
+Heavily inspired by Ester Sanchez's CalendarCards watchface.
 
 ## Features
 
