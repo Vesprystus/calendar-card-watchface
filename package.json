@@ -1,7 +1,7 @@
 {
   "name": "upcoming-calendar-cards",
-  "author": "Claude",
-  "version": "1.2.2",
+  "author": "Vesprystus",
+  "version": "1.0.0",
   "keywords": [
     "pebble-watchface",
     "calendar",
@@ -18,7 +18,7 @@
   },
   "pebble": {
     "displayName": "Upcoming Calendar Cards",
-    "uuid": "0d780997-e637-4877-955a-7ac79520d728",
+    "uuid": "2e8f1047-a910-4c10-ac29-8b7d370915fe",
     "sdkVersion": "3",
     "enableMultiJS": true,
     "targetPlatforms": [
