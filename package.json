@@ -1,62 +1,62 @@
 {
-  "name": "calendar-card-watchface",
-  "author": "Vesprystus",
-  "version": "1.0.0",
-  "keywords": [
-    "pebble-watchface",
-    "calendar",
-    "cards",
-    "upcoming",
-    "events",
-    "weather",
-    "configurable",
-    "countdown"
-  ],
-  "private": true,
-  "dependencies": {
-    "@rebble/clay": "^1.0.8"
-  },
-  "pebble": {
-    "displayName": "Calendar Card Watchface",
-    "uuid": "2e8f1047-a910-4c10-ac29-8b7d370915fe",
-    "sdkVersion": "3",
-    "enableMultiJS": true,
-    "targetPlatforms": [
-      "basalt",
-      "chalk",
-      "diorite",
-      "emery",
-      "flint",
-      "gabbro"
-    ],
-    "watchapp": {
-      "watchface": true
+    "author": "Vesprystus",
+    "dependencies": {
+        "@rebble/clay": "^1.0.8"
     },
-    "capabilities": [
-      "configurable",
-      "location"
+    "keywords": [
+        "pebble-watchface",
+        "calendar",
+        "cards",
+        "upcoming",
+        "events",
+        "weather",
+        "configurable",
+        "countdown"
     ],
-    "messageKeys": [
-      "REQUEST_UPDATE",
-      "HAS_EVENT",
-      "EVENT_TITLE",
-      "EVENT_HOUR",
-      "EVENT_MINUTE",
-      "TEMPERATURE",
-      "CONDITIONS",
-      "PrimaryColor",
-      "SecondaryColor",
-      "TextColor",
-      "CalendarUrl",
-      "TemperatureUnit",
-      "CountdownPosition",
-      "ShowWeather",
-      "ShowBattery",
-      "ShowBluetooth",
-      "DateFormat"
-    ],
-    "resources": {
-      "media": []
-    }
-  }
+    "name": "calendar-card-watchface",
+    "pebble": {
+        "capabilities": [
+            "configurable",
+            "location"
+        ],
+        "displayName": "Calendar Card Watchface",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "REQUEST_UPDATE",
+            "HAS_EVENT",
+            "EVENT_TITLE",
+            "EVENT_HOUR",
+            "EVENT_MINUTE",
+            "TEMPERATURE",
+            "CONDITIONS",
+            "PrimaryColor",
+            "SecondaryColor",
+            "TextColor",
+            "CalendarUrl",
+            "TemperatureUnit",
+            "CountdownPosition",
+            "ShowWeather",
+            "ShowBattery",
+            "ShowBluetooth",
+            "DateFormat"
+        ],
+        "projectType": "native",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "basalt",
+            "chalk",
+            "diorite",
+            "emery",
+            "flint",
+            "gabbro"
+        ],
+        "uuid": "2e8f1047-a910-4c10-ac29-8b7d370915fe",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.0.0"
 }

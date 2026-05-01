@@ -112,7 +112,8 @@ module.exports = [
           { "label": "04/24/2026",           "value": 3 },
           { "label": "2026-04-24",           "value": 4 },
           { "label": "24 Apr",               "value": 5 },
-          { "label": "None (hidden)",        "value": 6 }
+          { "label": "Thursday 24/04/2026",  "value": 6 },
+          { "label": "None (hidden)",        "value": 7 }
         ]
       }
     ]

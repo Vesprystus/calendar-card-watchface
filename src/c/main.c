@@ -1,6 +1,7 @@
 #include <pebble.h>
 
 #define SETTINGS_KEY 1
+#define DATE_FORMAT_NONE 7  // sentinel: hide date layer
 
 typedef struct {
   GColor  PrimaryColor;
@@ -126,8 +127,6 @@ static void card_update_proc(Layer *layer, GContext *ctx) {
   graphics_fill_rect(ctx, layer_get_bounds(layer), 8, GCornersAll);
 }
 
-#define DATE_FORMAT_NONE 6  // sentinel: hide date layer
-
 // ---- Card interior layout (positions countdown label vs event title) ----
 
 static void prv_apply_card_layout(void) {
@@ -190,17 +189,18 @@ static void prv_apply_layout(bool show_card) {
   layer_set_frame(text_layer_get_layer(s_time_layer),
     GRect(0, time_y, w, s_time_h));
   layer_set_frame(text_layer_get_layer(s_date_layer),
-    GRect(s_date_px, date_y, w - s_date_px, s_date_h));
+    GRect(0, date_y, w, s_date_h));
 }
 
 // ---- Time / Date ----
 static const char * const DATE_FORMATS[] = {
-  "%a %d %b",   // 0: Thu 24 Apr
-  "%A, %d %B",  // 1: Thursday, 24 April
-  "%d.%m.%Y",   // 2: 24.04.2026
-  "%m/%d/%Y",   // 3: 04/24/2026
-  "%Y-%m-%d",   // 4: 2026-04-24
-  "%d %b",      // 5: 24 Apr
+  "%a %d %b",     // 0: Thu 24 Apr
+  "%A, %d %B",    // 1: Thursday, 24 April
+  "%d.%m.%Y",     // 2: 24.04.2026
+  "%m/%d/%Y",     // 3: 04/24/2026
+  "%Y-%m-%d",     // 4: 2026-04-24
+  "%d %b",        // 5: 24 Apr
+  "%A %d/%m/%Y"  // 6: Thursday 24/04/2026
 };
 
 static void prv_update_time(void) {
@@ -476,12 +476,12 @@ static void main_window_load(Window *window) {
 
   // Date: left-aligned, starting at s_date_px
   s_date_layer = text_layer_create(
-    GRect(s_date_px, date_y_top, w - s_date_px, s_date_h));
+    GRect(0, date_y_top, w, s_date_h));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_text_color(s_date_layer, s_settings.TextColor);
   text_layer_set_font(s_date_layer, fonts_get_system_font(
     large ? FONT_KEY_GOTHIC_28_BOLD : FONT_KEY_GOTHIC_18_BOLD));
-  text_layer_set_text_alignment(s_date_layer, GTextAlignmentLeft);
+  text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
 
   // Weather: top-right
   s_weather_layer = text_layer_create(
@@ -550,6 +550,7 @@ static void main_window_unload(Window *window) {
 // ---- Init / deinit ----
 
 static void init(void) {
+  setlocale(LC_ALL, "");
   prv_load_settings();
 
   s_event_title[0] = '\0';
