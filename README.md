@@ -35,7 +35,7 @@ Larger fonts and taller card area take advantage of the 200×228 high-resolution
 
 ### From Source
 ```bash
-cd upcoming-calendar-cards
+cd calendar-card-watchface
 pebble build
 pebble install --emulator basalt  # or --phone for real device
 ```
