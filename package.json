@@ -1,5 +1,5 @@
 {
-  "name": "upcoming-calendar-cards",
+  "name": "calendar-card-watchface",
   "author": "Vesprystus",
   "version": "1.0.0",
   "keywords": [
@@ -17,7 +17,7 @@
     "@rebble/clay": "^1.0.8"
   },
   "pebble": {
-    "displayName": "Upcoming Calendar Cards",
+    "displayName": "Calendar Card Watchface",
     "uuid": "2e8f1047-a910-4c10-ac29-8b7d370915fe",
     "sdkVersion": "3",
     "enableMultiJS": true,
