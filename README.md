@@ -29,7 +29,7 @@ Larger fonts and taller card area take advantage of the 200×228 high-resolution
 ## Installation
 
 ### From PBW File
-1. Transfer `upcoming-calendar-cards.pbw` to your phone
+1. Transfer `calendar-card-watchface.pbw` to your phone
 2. Open with the Pebble app
 3. Install to your watch
 
