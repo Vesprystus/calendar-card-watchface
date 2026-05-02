@@ -147,8 +147,8 @@ static void prv_apply_card_layout(void) {
   int lbl_y, title_y, title_h;
   if (s_settings.CountdownPosition == 0) {
     lbl_y   = margin - 5;
-    title_y = lbl_y + lbl_h;
-    title_h = card_h - title_y - margin;
+    title_y = lbl_y + lbl_h - 1;
+    title_h = card_h - title_y - margin + 1;
   } else {
     title_y = margin;
     lbl_y   = card_h - margin - lbl_h + 5;
@@ -159,7 +159,7 @@ static void prv_apply_card_layout(void) {
   layer_set_frame(text_layer_get_layer(s_countdown_label_layer),
     GRect(ci_px, lbl_y, ci_w, lbl_h));
   layer_set_frame(text_layer_get_layer(s_event_title_layer),
-    GRect(ci_px, title_y, ci_w, title_h));
+    GRect(ci_px - 1, title_y, ci_w, title_h));
 }
 
 // ---- Dynamic layout (repositions time+date when card shown/hidden) ----
@@ -188,7 +188,7 @@ static void prv_apply_layout(bool show_card) {
     time_y = (h - block_h) / 2;
     if (time_y < s_status_h + py + 2) time_y = s_status_h + py + 2;
   }
-  date_y = time_y + s_time_h + 3;
+  date_y = time_y + s_time_h + 2;
 
   layer_set_frame(text_layer_get_layer(s_time_layer),
     GRect(1, time_y, w, s_time_h));
@@ -518,7 +518,7 @@ static void main_window_load(Window *window) {
     large ? FONT_KEY_GOTHIC_28_BOLD : FONT_KEY_GOTHIC_18_BOLD));
   text_layer_set_text_alignment(s_event_title_layer, GTextAlignmentLeft);
   text_layer_set_overflow_mode(s_event_title_layer,
-    GTextOverflowModeWordWrap);
+    GTextOverflowModeFill);
 
   // Layer hierarchy
   layer_add_child(root, s_bg_layer);
