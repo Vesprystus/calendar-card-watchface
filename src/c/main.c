@@ -28,6 +28,9 @@ static TextLayer *s_countdown_label_layer;  // "In X hours"
 static TextLayer *s_event_title_layer;
 static TextLayer *s_weather_layer;
 
+static GFont s_time_font;
+static GFont s_date_font;
+
 static char s_event_title[33];
 static int  s_event_hour;
 static int  s_event_minute;
@@ -49,7 +52,6 @@ static bool    s_bt_connected;
 // Cached layout values
 static int s_time_h;
 static int s_date_h;
-static int s_date_px;   // date left margin (≈ left edge of centered time text)
 static int s_status_h;
 
 #ifdef PBL_COLOR
@@ -116,7 +118,7 @@ static void status_update_proc(Layer *layer, GContext *ctx) {
   if (s_settings.ShowBluetooth && s_bt_connected) {
     // BT dot: right of battery when both visible; left-aligned (bat_x) when battery hidden
     int bt_cx = s_settings.ShowBattery
-      ? bat_x + bat_w + 7
+      ? bat_x + bat_w + 10
       : bat_x + 3;
     graphics_fill_circle(ctx, GPoint(bt_cx, bat_y + bat_h / 2), 3);
   }
@@ -138,18 +140,18 @@ static void prv_apply_card_layout(void) {
   int card_w = cb.size.w;
   int ci_px  = 10;
   int ci_w   = card_w - 2 * ci_px;
-  int lbl_h  = (card_h >= 50) ? 22 : 18;
+  int lbl_h  = 18;
   int margin = 10;
   int gap    = 8;
 
   int lbl_y, title_y, title_h;
   if (s_settings.CountdownPosition == 0) {
-    lbl_y   = margin;
-    title_y = lbl_y + lbl_h + gap;
+    lbl_y   = margin - 5;
+    title_y = lbl_y + lbl_h;
     title_h = card_h - title_y - margin;
   } else {
     title_y = margin;
-    lbl_y   = card_h - margin - lbl_h;
+    lbl_y   = card_h - margin - lbl_h + 5;
     title_h = lbl_y - title_y - gap;
   }
   if (title_h < 20) title_h = 20;
@@ -186,10 +188,10 @@ static void prv_apply_layout(bool show_card) {
     time_y = (h - block_h) / 2;
     if (time_y < s_status_h + py + 2) time_y = s_status_h + py + 2;
   }
-  date_y = time_y + s_time_h - 8;
+  date_y = time_y + s_time_h + 3;
 
   layer_set_frame(text_layer_get_layer(s_time_layer),
-    GRect(0, time_y, w, s_time_h));
+    GRect(1, time_y, w, s_time_h));
   layer_set_frame(text_layer_get_layer(s_date_layer),
     GRect(0, date_y, w, s_date_h));
 }
@@ -421,10 +423,9 @@ static void main_window_load(Window *window) {
 #if defined(PBL_PLATFORM_EMERY) || defined(PBL_PLATFORM_GABBRO)
   s_time_h   = 70;
 #else
-  s_time_h   = 48;
+  s_time_h   = 50;
 #endif
-  s_date_h   = large ? 30 : 20;
-  s_date_px  = w * 18 / 100;
+  s_date_h   = 18;
 
   // ---- Weather (top-right) ----
   int weather_x = w / 2;
@@ -467,24 +468,22 @@ static void main_window_load(Window *window) {
   layer_set_update_proc(s_status_layer, status_update_proc);
 
   // Time: full width, centered text
-  s_time_layer = text_layer_create(GRect(0, time_y_top, w, s_time_h));
+  s_time_layer = text_layer_create(GRect(1, time_y_top, w, s_time_h));
   text_layer_set_background_color(s_time_layer, GColorClear);
   text_layer_set_text_color(s_time_layer, s_settings.TextColor);
 #if defined(PBL_PLATFORM_EMERY) || defined(PBL_PLATFORM_GABBRO)
   text_layer_set_font(s_time_layer,
     fonts_get_system_font(FONT_KEY_LECO_60_NUMBERS_AM_PM));
 #else
-  text_layer_set_font(s_time_layer,
-    fonts_get_system_font(FONT_KEY_LECO_38_BOLD_NUMBERS));
+  text_layer_set_font(s_time_layer, s_time_font);
 #endif
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
 
   // Date: full width, centered text
-  s_date_layer = text_layer_create(
-    GRect(0, date_y_top, w, s_date_h));
+  s_date_layer = text_layer_create(GRect(0, date_y_top, w, s_date_h));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_text_color(s_date_layer, s_settings.TextColor);
-  text_layer_set_font(s_date_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+  text_layer_set_font(s_date_layer, s_date_font);
   text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
 
   // Weather: top-right
@@ -555,6 +554,8 @@ static void main_window_unload(Window *window) {
 
 static void init(void) {
   setlocale(LC_ALL, "");
+  s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_SQUARE_NUMBERS_AM_PM_50));
+  s_date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_VERDANAPRO_CONDENSED_REGULAR_13));
   prv_load_settings();
 
   s_event_title[0] = '\0';

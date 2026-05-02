@@ -43,16 +43,26 @@
         ],
         "projectType": "native",
         "resources": {
-            "media": []
+            "media": [
+                {
+                    "characterRegex": "[A-Za-z\u00c0-\u017e0-9\u00b0:.,/CF ]",
+                    "file": "fonts/verdanapro-condensed-regular.ttf",
+                    "name": "VERDANAPRO_CONDENSED_REGULAR_13",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "characterRegex": "[0-9:.AMP ]",
+                    "file": "fonts/square.ttf",
+                    "name": "SQUARE_NUMBERS_AM_PM_50",
+                    "targetPlatforms": null,
+                    "type": "font"
+                }
+            ]
         },
         "sdkVersion": "3",
         "targetPlatforms": [
-            "basalt",
-            "chalk",
-            "diorite",
-            "emery",
-            "gabbro",
-            "flint"
+            "basalt"
         ],
         "uuid": "2e8f1047-a910-4c10-ac29-8b7d370915fe",
         "watchapp": {
