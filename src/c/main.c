@@ -238,12 +238,15 @@ static void prv_update_event_display(void) {
 
   if (show_card) {
     // "In X hours" / "In X min" label
-    if (s_event_hour > 0) {
+    if (s_event_hour >= 24) {
       snprintf(s_countdown_label_buf, sizeof(s_countdown_label_buf),
-               s_event_hour == 1 ? "In 1 hour" : "In %d hours", s_event_hour);
+               s_event_hour < 48 ? "Domani" : "Tra %d giorni", s_event_hour / 24);
+    } else if (s_event_hour > 0) {
+      snprintf(s_countdown_label_buf, sizeof(s_countdown_label_buf),
+               s_event_hour == 1 ? "Tra 1 ora" : "Tra %d ore", s_event_hour);
     } else {
       snprintf(s_countdown_label_buf, sizeof(s_countdown_label_buf),
-               s_event_minute == 1 ? "In 1 min" : "In %d min", s_event_minute);
+               s_event_minute == 1 ? "Tra 1 min" : "Tra %d min", s_event_minute);
     }
 
     text_layer_set_text(s_countdown_label_layer, s_countdown_label_buf);
@@ -428,9 +431,8 @@ static void main_window_load(Window *window) {
   s_date_h   = 18;
 
   // ---- Weather (top-right) ----
-  int weather_x = w / 2;
   int weather_y = py + 1;
-  int weather_w = w - weather_x - px_c;
+  int weather_w = w - px_c + 1;
   int weather_h = s_status_h;
 
   // ---- Card (positioned near bottom; final y set by prv_apply_layout) ----
@@ -488,7 +490,7 @@ static void main_window_load(Window *window) {
 
   // Weather: top-right
   s_weather_layer = text_layer_create(
-    GRect(weather_x, weather_y, weather_w, weather_h));
+    GRect(0, weather_y, weather_w, weather_h));
   text_layer_set_background_color(s_weather_layer, GColorClear);
   text_layer_set_text_color(s_weather_layer, s_settings.TextColor);
   text_layer_set_font(s_weather_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));

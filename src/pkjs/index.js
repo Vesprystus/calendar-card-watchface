@@ -301,15 +301,34 @@ function fetchNextEvent() {
 // --- Weather (Open-Meteo, no API key) ---
 
 var WMO_MAP = [
-  [0,  'Clear'],
-  [3,  'Cloudy'],
-  [9,  'Partly Cloudy'],
-  [49, 'Foggy'],
-  [57, 'Drizzle'],
-  [67, 'Rain'],
-  [77, 'Snow'],
-  [82, 'Showers'],
-  [99, 'Storm']
+  [0,  'Sereno'],
+  [1,  'Sereno'],
+  [2,  'Nuvoloso'],
+  [3,  'Nuvoloso'],
+  [45, 'Nebbia'],
+  [48, 'Nebbia'],
+  [51, 'Pioviggine'],
+  [53, 'Pioviggine'],
+  [55, 'Pioviggine'],
+  [56, 'Pioviggine'],
+  [57, 'Pioviggine'],
+  [61, 'Pioggia'],
+  [63, 'Pioggia'],
+  [65, 'Pioggia'],
+  [66, 'Pioggia'],
+  [67, 'Pioggia'],
+  [71, 'Neve'],
+  [73, 'Neve'],
+  [75, 'Neve'],
+  [77, 'Neve'],
+  [80, 'Pioggia'],
+  [81, 'Pioggia'],
+  [82, 'Pioggia'],
+  [85, 'Neve'],
+  [86, 'Neve'],
+  [95, 'Tempesta'],
+  [96, 'Grandine'],
+  [99, 'Grandine']
 ];
 
 function wmoDescription(code) {
