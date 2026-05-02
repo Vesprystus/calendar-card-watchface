@@ -431,7 +431,7 @@ static void main_window_load(Window *window) {
   int weather_x = w / 2;
   int weather_y = py + 1;
   int weather_w = w - weather_x - px_c;
-  int weather_h = s_status_h - 1;
+  int weather_h = s_status_h;
 
   // ---- Card (positioned near bottom; final y set by prv_apply_layout) ----
   // Compute time+date block bottom when shown at top
@@ -483,7 +483,7 @@ static void main_window_load(Window *window) {
   s_date_layer = text_layer_create(GRect(0, date_y_top, w, s_date_h));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_text_color(s_date_layer, s_settings.TextColor);
-  text_layer_set_font(s_date_layer, s_date_font);
+  text_layer_set_font(s_date_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
   text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
 
   // Weather: top-right
@@ -555,7 +555,6 @@ static void main_window_unload(Window *window) {
 static void init(void) {
   setlocale(LC_ALL, "");
   s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_SQUARE_NUMBERS_AM_PM_50));
-  s_date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_VERDANAPRO_CONDENSED_REGULAR_13));
   prv_load_settings();
 
   s_event_title[0] = '\0';
